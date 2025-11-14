@@ -158,7 +158,7 @@ section.content {
 }
 
 .subtitulo {
-   text-align: center;
+  text-align: center;
   font-size: 1.2em;
   color: #800000;
   margin-bottom: 20px;
@@ -625,7 +625,7 @@ section.content {
 #notificaciones-icon {
   position: absolute;
   top: 18px;
-  margin-right: 5px;
+  right: 30px;
   font-size: 22px;
   color: white;
   cursor: pointer;
@@ -725,7 +725,7 @@ footer {
 /* ============================================
    REPONSIVIDAD PARA DIFERENTES RESOLUCIONES
 ============================================ */
-@media (min-width: 1024px) {
+@media (min-width: 1600px) {
       #gallery-container {
         grid-template-columns: repeat(4, 1fr);
       }
@@ -740,10 +740,35 @@ footer {
       }
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1600px) {
+      .logo {
+        font-size: 1rem;    
+      }
+      
+      .menu li {
+        gap: 0.3rem;
+        font-size: 12.5px;
+      }
+    }
+
+    @media (max-width: 1440px) {
+      .logo {
+        font-size: 0.8rem;    
+      }
+
+      .menu li {
+        gap: 0.1rem;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 1152px) {
+      .subtitulo {
+        text-align: justify;
+      }
       .centrado {
-  text-align: justify;
-}
+        text-align: justify;
+      }
       nav {
         flex-wrap: wrap;
         padding-right: 3rem;
@@ -775,12 +800,81 @@ footer {
       .menu li {
         justify-content: flex-start;
         padding-left: 2rem;
+        gap: 0.5rem;
         font-size: 17px;
       }
 
       .logo {
         width: 100%;
         margin-bottom: 0.5rem;
+        font-size: 1.2rem;  
+      }
+       .boton-tarea {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      #grupos-matutino .boton-tarea,
+      #grupos-vespertino .boton-tarea {
+        padding: 6px 12px;
+        font-size: 9px;
+      }
+      
+      #notificaciones-icon {
+        right: 15px;
+      }
+
+      #mapa-estatico{
+        width: 100%;
+      }
+      .imagen-inicio img {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .centrado {
+        text-align: justify;
+      }
+      nav {
+        flex-wrap: wrap;
+        padding-right: 3rem;
+      }
+
+      .hamburger {
+        display: flex;
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #8E0104;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 1rem 0;
+      }
+
+      .menu.show {
+        display: flex;
+      }
+
+      .menu li {
+        justify-content: flex-start;
+        padding-left: 2rem;
+        gap: 0.5rem;
+        font-size: 17px;
+      }
+
+      .logo {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;  
       }
        .boton-tarea {
         padding: 8px 16px;
@@ -834,13 +928,16 @@ footer {
       .menu li {
         justify-content: flex-start;
         padding-left: 2rem;
+        gap: 0.5rem;
         font-size: 17px;
       }
 
       .logo {
         width: 100%;
         margin-bottom: 0.5rem;
+        font-size: 1.2rem;  
       }
+
        .boton-tarea {
         padding: 8px 16px;
         font-size: 14px;

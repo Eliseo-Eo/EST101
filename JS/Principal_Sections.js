@@ -1,6 +1,21 @@
- 
- 
-  
+// MOSTRAR GRUPOS HORARIOS Y TAREA
+  window.mostrarGrupos = function (turno) {
+    $('#grupos-matutino, #grupos-vespertino').slideUp();
+    $(`#materias-matutino-1, #materias-matutino-2, #materias-matutino-3`).slideUp();
+    $(`#materias-vespertino-1, #materias-vespertino-2, #materias-vespertino-3`).slideUp();
+      if (turno === 'matutino') {
+        $('#grupos-matutino').slideDown(); 
+      } else if (turno === 'vespertino') {
+        $('#grupos-vespertino').slideDown(); 
+      }
+  };
+
+  function mostrarMaterias(turno, grado) {
+    $(`#materias-matutino-1, #materias-matutino-2, #materias-matutino-3`).slideUp();
+    $(`#materias-vespertino-1, #materias-vespertino-2, #materias-vespertino-3`).slideUp();
+    $(`#materias-${turno}-${grado}`).slideDown(); 
+  }
+    
   const sections = {
   // =========================
   // Sección: Inicio
@@ -184,82 +199,80 @@
   // Sección: Tareas
   // =========================
   // Permite descargar tareas según turno y grado, con botones interactivos.
-tareas: `
-  <h2 class="titulo-principal" tabindex="0">Tareas</h2>
-  <p class="subtitulo" tabindex="0">Selecciona tu turno, grado y materia para ver las tareas correspondientes:</p>
+  tareas: `
+    <h2 class="titulo-principal" tabindex="0">Tareas</h2>
+    <p class="subtitulo" tabindex="0">Selecciona tu turno, grado y materia para ver las tareas correspondientes:</p>
 
-  <div class="imagen-tareas-contenedor">
-    <img src="IMG/Tareas.png" alt="Imagen representativa de tareas escolares" class="imagen-tareas" loading="lazy" />
-  </div>
-
-  <div class="botones-tareas-contenedor">
-    <!-- Botones para mostrar grupos matutino o vespertino -->
-    <button onclick="mostrarGrupos('matutino')" class="boton-tarea" aria-controls="grupos-matutino" aria-expanded="false" aria-haspopup="true">
-      <i class="fas fa-school" aria-hidden="true"></i> Matutino
-    </button>
-    <button onclick="mostrarGrupos('vespertino')" class="boton-tarea" aria-controls="grupos-vespertino" aria-expanded="false" aria-haspopup="true">
-      <i class="fas fa-school" aria-hidden="true"></i> Vespertino
-    </button>
-  </div>
-
-  <!-- Contenedor de grupos Matutino -->
-  <div id="grupos-matutino" class="grupos-contenedor" style="display: none;" aria-live="polite" aria-atomic="true">
-    <h3 class="centrado" tabindex="0">Grupos Matutino</h3>
-    <div class="grupos-fila" style="display: flex; justify-content: center; gap: 20px;">
-      ${[1, 2, 3].map(grado => `
-        <button onclick="mostrarMaterias('matutino', ${grado})" class="boton-tarea" aria-controls="materias-matutino-${grado}" aria-expanded="false" aria-haspopup="true">
-          <i class="fas fa-book" aria-hidden="true"></i> Grado ${grado}
-        </button>
-      `).join('')}
+    <div class="imagen-tareas-contenedor">
+      <img src="IMG/Tareas.png" alt="Imagen representativa de tareas escolares" class="imagen-tareas" loading="lazy" />
     </div>
-  </div>
 
-  <!-- Contenedor de grupos Vespertino -->
-  <div id="grupos-vespertino" class="grupos-contenedor" style="display: none;" aria-live="polite" aria-atomic="true">
-    <h3 class="centrado" tabindex="0">Grupos Vespertino</h3>
-    <div class="grupos-fila" style="display: flex; justify-content: center; gap: 20px;">
-      ${[1, 2, 3].map(grado => `
-        <button onclick="mostrarMaterias('vespertino', ${grado})" class="boton-tarea" aria-controls="materias-vespertino-${grado}" aria-expanded="false" aria-haspopup="true">
-          <i class="fas fa-book" aria-hidden="true"></i> Grado ${grado}
-        </button>
-      `).join('')}
+    <div class="botones-tareas-contenedor">
+      <!-- Botones para mostrar grupos matutino o vespertino -->
+      <button onclick="mostrarGrupos('matutino')" class="boton-tarea" aria-controls="grupos-matutino" aria-expanded="false" aria-haspopup="true">
+        <i class="fas fa-school" aria-hidden="true"></i> Matutino
+      </button>
+      <button onclick="mostrarGrupos('vespertino')" class="boton-tarea" aria-controls="grupos-vespertino" aria-expanded="false" aria-haspopup="true">
+        <i class="fas fa-school" aria-hidden="true"></i> Vespertino
+      </button>
     </div>
-  </div>
 
-  <!-- Contenedor de materias para cada grado matutino -->
-  ${[1, 2, 3].map(grado => `
-    <div id="materias-matutino-${grado}" class="materias-contenedor" style="display: none;">
-      <h4 class="centrado" tabindex="0">Materias para Grado ${grado}</h4>
-      <div class="materias-fila" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        ${['Artes', 'Biologia', 'Ed_Fisica', 'Español', 'Force', 'Geografia', 'Historia', 'Ingles', 'Matematicas', 'Tutorias'].map(materia => `
-          <a href="ARCHIVOS/T_MAT/TAREAS/${grado}_Grado_${materia}.docx" download class="materia-link" aria-label="Descargar tarea de ${materia} para grado ${grado} matutino">
-            <button class="boton-tarea">
-              <i class="fas fa-download" aria-hidden="true"></i> ${materia}
-            </button>
-          </a>
+    <!-- Contenedor de grupos Matutino -->
+    <div id="grupos-matutino" class="grupos-contenedor" style="display: none;" aria-live="polite" aria-atomic="true">
+      <h3 class="centrado" tabindex="0">Grupos Matutino</h3>
+      <div class="grupos-fila" style="display: flex; justify-content: center; gap: 20px;">
+        ${[1, 2, 3].map(grado => `
+          <button onclick="mostrarMaterias('matutino', ${grado})" class="boton-tarea" aria-controls="materias-matutino-${grado}" aria-expanded="false" aria-haspopup="true">
+            <i class="fas fa-book" aria-hidden="true"></i> Grado ${grado}
+          </button>
         `).join('')}
       </div>
     </div>
-  `).join('')}
 
-  <!-- Contenedor de materias para cada grado vespertino -->
-  ${[1, 2, 3].map(grado => `
-    <div id="materias-vespertino-${grado}" class="materias-contenedor" style="display: none;">
-      <h4 class="centrado" tabindex="0">Materias para Grado ${grado}</h4>
-      <div class="materias-fila" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        ${['Artes', 'Biologia', 'Ed_Fisica', 'Español', 'Force', 'Geografia', 'Historia', 'Ingles', 'Matematicas', 'Tutorias'].map(materia => `
-          <a href="ARCHIVOS/T_VES/TAREAS/${grado}_Grado_${materia}.docx" download class="materia-link" aria-label="Descargar tarea de ${materia} para grado ${grado} vespertino">
-            <button class="boton-tarea">
-              <i class="fas fa-download" aria-hidden="true"></i> ${materia}
-            </button>
-          </a>
+    <!-- Contenedor de grupos Vespertino -->
+    <div id="grupos-vespertino" class="grupos-contenedor" style="display: none;" aria-live="polite" aria-atomic="true">
+      <h3 class="centrado" tabindex="0">Grupos Vespertino</h3>
+      <div class="grupos-fila" style="display: flex; justify-content: center; gap: 20px;">
+        ${[1, 2, 3].map(grado => `
+          <button onclick="mostrarMaterias('vespertino', ${grado})" class="boton-tarea" aria-controls="materias-vespertino-${grado}" aria-expanded="false" aria-haspopup="true">
+            <i class="fas fa-book" aria-hidden="true"></i> Grado ${grado}
+          </button>
         `).join('')}
       </div>
     </div>
-  `).join('')}
+
+    <!-- Contenedor de materias para cada grado matutino -->
+    ${[1, 2, 3].map(grado => `
+      <div id="materias-matutino-${grado}" class="materias-contenedor" style="display: none;">
+        <h4 class="centrado" tabindex="0">Materias para Grado ${grado}</h4>
+        <div class="materias-fila" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+          ${['Artes', 'Biologia', 'Ed_Fisica', 'Español', 'Force', 'Geografia', 'Historia', 'Ingles', 'Matematicas', 'Tutorias'].map(materia => `
+            <a href="ARCHIVOS/T_MAT/TAREAS/${grado}_Grado_${materia}.docx" download class="materia-link" aria-label="Descargar tarea de ${materia} para grado ${grado} matutino">
+              <button class="boton-tarea">
+                <i class="fas fa-download" aria-hidden="true"></i> ${materia}
+              </button>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `).join('')}
+
+    <!-- Contenedor de materias para cada grado vespertino -->
+    ${[1, 2, 3].map(grado => `
+      <div id="materias-vespertino-${grado}" class="materias-contenedor" style="display: none;">
+        <h4 class="centrado" tabindex="0">Materias para Grado ${grado}</h4>
+        <div class="materias-fila" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+          ${['Artes', 'Biologia', 'Ed_Fisica', 'Español', 'Force', 'Geografia', 'Historia', 'Ingles', 'Matematicas', 'Tutorias'].map(materia => `
+            <a href="ARCHIVOS/T_VES/TAREAS/${grado}_Grado_${materia}.docx" download class="materia-link" aria-label="Descargar tarea de ${materia} para grado ${grado} vespertino">
+              <button class="boton-tarea">
+                <i class="fas fa-download" aria-hidden="true"></i> ${materia}
+              </button>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `).join('')}
 `,
-
-
 
 // ==================================================
 // Sección: Horarios

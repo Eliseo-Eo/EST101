@@ -117,7 +117,7 @@ if (!empty($_SESSION['user_id']) && is_numeric($_SESSION['user_id'])) {
       <section class="content" id="content">
         <div class="contenido">
           <h1 class="titulo-principal">Bienvenido a Secundaria Técnica 101</h1>
-          <p class="centrado">
+          <p class="subtitulo">
             La Secundaria Técnica 101 está comprometida con la formación técnica y académica de calidad,
             preparando a los estudiantes para los retos del mundo moderno y la industria.
           </p>

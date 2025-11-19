@@ -363,7 +363,62 @@ section.content {
 }
 
 /* ============================================
-   BOTONES HORARIOS Y TAREAS
+   BOTONES HORARIOS
+============================================ */
+.boton-horario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  background-color: var(--color-secundario);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  justify-content: center;
+}
+
+.boton-horario:hover {
+  background-color: var(--color-hover);
+  box-shadow: 0 5px 20px rgba(142,1,4,0.5);
+  transform: scale(1.01);
+}
+
+.imagen-horario-contenedor {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.imagen-horario {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.botones-horario-contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.grupos-contenedor {
+  margin-top: 2rem;
+}
+
+.grupos-fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   BOTONES TAREAS
 ============================================ */
 .boton-tarea {
   display: flex;
@@ -378,6 +433,8 @@ section.content {
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s;
+  justify-content: center;
+  min-width: 160px;
 }
 
 .boton-tarea:hover {
@@ -402,18 +459,6 @@ section.content {
   justify-content: center;
   gap: 1.5rem;
   margin-top: 2rem;
-}
-
-.grupos-contenedor {
-  margin-top: 2rem;
-}
-
-.grupos-fila {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 /* ============================================
@@ -766,9 +811,6 @@ footer {
       .subtitulo {
         text-align: justify;
       }
-      .centrado {
-        text-align: justify;
-      }
       nav {
         flex-wrap: wrap;
         padding-right: 3rem;
@@ -814,12 +856,6 @@ footer {
         font-size: 14px;
       }
 
-      #grupos-matutino .boton-tarea,
-      #grupos-vespertino .boton-tarea {
-        padding: 6px 12px;
-        font-size: 9px;
-      }
-      
       #notificaciones-icon {
         right: 15px;
       }
@@ -833,9 +869,6 @@ footer {
     }
 
     @media (max-width: 1024px) {
-      .centrado {
-        text-align: justify;
-      }
       nav {
         flex-wrap: wrap;
         padding-right: 3rem;
@@ -879,12 +912,6 @@ footer {
        .boton-tarea {
         padding: 8px 16px;
         font-size: 14px;
-      }
-
-      #grupos-matutino .boton-tarea,
-      #grupos-vespertino .boton-tarea {
-        padding: 6px 12px;
-        font-size: 9px;
       }
       
       #notificaciones-icon {
@@ -943,8 +970,8 @@ footer {
         font-size: 14px;
       }
 
-      #grupos-matutino .boton-tarea,
-      #grupos-vespertino .boton-tarea {
+      #grupos-matutino .boton-horario,
+      #grupos-vespertino .boton-horario {
         padding: 6px 12px;
         font-size: 9px;
       }
@@ -985,8 +1012,8 @@ footer {
         font-size: 14px;
       }
 
-      #grupos-matutino .boton-tarea,
-      #grupos-vespertino .boton-tarea {
+      #grupos-matutino .boton-horario,
+      #grupos-vespertino .boton-horario {
         padding: 6px 12px;
         font-size: 9px;
       }

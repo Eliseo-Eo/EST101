@@ -1,0 +1,5 @@
+<IfModule pagespeed_module>
+  ModPagespeedDisallow "*/Principal_Scripts.js"
+  ModPagespeedDisallow "*/Principal_Sections.js"
+  ModPagespeedDisallow "*/Principal_Style.css"
+</IfModule>

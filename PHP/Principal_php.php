@@ -15,7 +15,7 @@
  *   - Cabeceras anti-caché para mayor seguridad.
  *   - Respuestas uniformes en formato JSON.
  *
- *  Autor: [Tu Nombre]
+ *  Autor: [Guillermo Eliseo Guzman Lopez]
  *  Fecha: 2025
  * ==========================================================
  */

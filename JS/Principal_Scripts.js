@@ -1,10 +1,16 @@
 $(document).ready(function () {
+
+  // ==================================================
+  // Sección: Variables globales
+  // ==================================================
   const menu = $('#menu');
   const content = $('#content');
   const modalOverlay = $('#modal-overlay');
   const modalImg = modalOverlay.find('img').get(0);
 
-  // MENÚ HAMBURGUESA
+  // ==================================================
+  // Sección: Menú Hamburguesa
+  // ==================================================
   $('#hamburger').on('click keydown', function (e) {
     if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
       menu.slideToggle().toggleClass('show');
@@ -12,7 +18,9 @@ $(document).ready(function () {
     }
   });
 
-  // CAMBIO DE SECCIÓN
+  // ==================================================
+  // Sección: Cambio de sección (Menú)
+  // ==================================================
   $('#menu').on('click', 'li', function () {
     const section = $(this).data('section');
     $('#menu li').removeClass('active');
@@ -24,13 +32,15 @@ $(document).ready(function () {
       });
     });
 
-    // CERRAR EL MENU SI ESTAMOS EN DISPOSITIVOS PEQUEÑOS
+    // Cerrar el menú en dispositivos pequeños
     if ($(window).width() <= 1000) {
       menu.slideUp().removeClass('show');
     }
   });
 
-  // CARGAR NOTIFICACION DESDE ARCHIVO
+  // ==================================================
+  // Sección: Cargar notificaciones desde archivo
+  // ==================================================
   $('#notificaciones-icon').on('click', function () {
     cargarNotificacionesDesdeArchivo();
     $('#notificaciones-modal').addClass('open');
@@ -55,7 +65,9 @@ $(document).ready(function () {
     });
   }
 
- // GALERÍA DINÁMICA (CARGANDO DE 100 A 0)
+  // ==================================================
+  // Sección: Galería dinámica (Cargando imágenes en lotes)
+  // ==================================================
   function cargarGaleria() {
     const container = $('#gallery-container');
     if (!container.length) return;
@@ -98,6 +110,9 @@ $(document).ready(function () {
     cargarLote();
   }
 
+  // ==================================================
+  // Sección: Crear imagen de galería
+  // ==================================================
   function crearImagenGaleria(index) {
     const img = $('<img>', {
       'data-src': `ARCHIVOS/GALERIA/${index}.jpg`,
@@ -123,6 +138,9 @@ $(document).ready(function () {
     return img;
   }
 
+  // ==================================================
+  // Sección: Aplicar lazy loading a las imágenes
+  // ==================================================
   function aplicarLazyLoading(imagenes) {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -138,10 +156,12 @@ $(document).ready(function () {
     imagenes.forEach(img => observer.observe(img));
   }
 
-  // MODAL DE IMÁGENES
+  // ==================================================
+  // Sección: Modal de imagen
+  // ==================================================
   $('#modal-close').on('click', cerrarModal);
   $('#modal-overlay').on('click', function (e) {
-      if (e.target === this) cerrarModal();
+    if (e.target === this) cerrarModal();
   });
   $(document).on('keydown', function (e) {
     if (e.key === 'Escape') {
@@ -150,7 +170,9 @@ $(document).ready(function () {
     }
   });
 
-  // ABRIR MODAL IMAGEN
+  // ==================================================
+  // Función: Abrir modal de imagen
+  // ==================================================
   function abrirModal(src, alt) {
     modalImg.src = src;
     modalImg.alt = alt;
@@ -158,133 +180,145 @@ $(document).ready(function () {
     $('body').css('overflow', 'hidden');
   }
 
-  // CERRAR MODAL IMAGEN
+  // ==================================================
+  // Función: Cerrar modal de imagen
+  // ==================================================
   function cerrarModal() {
     modalOverlay.css('display', 'none').attr('aria-hidden', 'true');
     $('body').css('overflow', 'auto');
   }
-  
-  // EFECTO HOVER BOTONES HORARIOS Y TAREA
+
+  // ==================================================
+  // Sección: Efecto hover en botones
+  // ==================================================
   $(document).on('mouseenter mouseleave', '.boton-tarea', function (e) {
     $(this).stop(true).animate({ opacity: e.type === 'mouseenter' ? 0.85 : 1 }, 200);
   });
 
-  // ASISTENCIA
+  // ==================================================
+  // Sección: Asistencia (Formulario y resultados)
+  // ==================================================
   document.addEventListener("DOMContentLoaded", () => {
-     const observer = new MutationObserver(() => {
-     const form = document.getElementById("formAsistencia");
-     const resultados = document.getElementById("resultadosAsistencia");
+    const observer = new MutationObserver(() => {
+      const form = document.getElementById("formAsistencia");
+      const resultados = document.getElementById("resultadosAsistencia");
 
-        if (form && resultados) {
-          form.addEventListener("submit", (e) => {
-            e.preventDefault();
+      if (form && resultados) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
 
-            const grado = document.getElementById("grado").value;
-            const grupo = document.getElementById("grupo").value;
-            const nombre = document.getElementById("nombre").value.toLowerCase().trim();
+          const grado = document.getElementById("grado").value;
+          const grupo = document.getElementById("grupo").value;
+          const nombre = document.getElementById("nombre").value.toLowerCase().trim();
 
-            // Simulación de datos
-            const datos = [
-              { nombre: "juan perez", grado: "1", grupo: "A", asistencias: "90%" },
-              { nombre: "maria lopez", grado: "2", grupo: "B", asistencias: "85%" },
-              { nombre: "luis martinez", grado: "3", grupo: "C", asistencias: "95%" }
-            ];
+          // Simulación de datos
+          const datos = [
+            { nombre: "juan perez", grado: "1", grupo: "A", asistencias: "90%" },
+            { nombre: "maria lopez", grado: "2", grupo: "B", asistencias: "85%" },
+            { nombre: "luis martinez", grado: "3", grupo: "C", asistencias: "95%" }
+          ];
 
-            const encontrados = datos.filter(d =>
-              d.grado === grado &&
-              d.grupo === grupo &&
-              d.nombre.includes(nombre)
-            );
+          const encontrados = datos.filter(d =>
+            d.grado === grado &&
+            d.grupo === grupo &&
+            d.nombre.includes(nombre)
+          );
 
-            if (encontrados.length === 0) {
-              resultados.innerHTML = `<p class="centrado" style="color: red;">No se encontraron resultados para los datos ingresados.</p>`;
-            } else {
-              resultados.innerHTML = `
-                <table class="tabla-asistencia">
-                  <thead>
+          if (encontrados.length === 0) {
+            resultados.innerHTML = `<p class="centrado" style="color: red;">No se encontraron resultados para los datos ingresados.</p>`;
+          } else {
+            resultados.innerHTML = `
+              <table class="tabla-asistencia">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Grado</th>
+                    <th>Grupo</th>
+                    <th>Asistencia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${encontrados.map(e => `
                     <tr>
-                      <th>Nombre</th>
-                      <th>Grado</th>
-                      <th>Grupo</th>
-                      <th>Asistencia</th>
+                      <td>${e.nombre}</td>
+                      <td>${e.grado}</td>
+                      <td>${e.grupo}</td>
+                      <td>${e.asistencias}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    ${encontrados.map(e => `
-                      <tr>
-                        <td>${e.nombre}</td>
-                        <td>${e.grado}</td>
-                        <td>${e.grupo}</td>
-                        <td>${e.asistencias}</td>
-                      </tr>
-                    `).join("")}
-                  </tbody>
-                </table>
-              `;
-            }
-          });
-        }
-      });
+                  `).join("")}
+                </tbody>
+              </table>
+            `;
+          }
+        });
+      }
+    });
     observer.observe(document.body, { childList: true, subtree: true });
   });
 
-    // LOGIN
-    $('#content').on('submit', '#loginForm', function (e) {
-      e.preventDefault();
-      const username = $('#username').val().trim();
-      const password = $('#password').val().trim();
+  // ==================================================
+  // Sección: Login
+  // ==================================================
+  $('#content').on('submit', '#loginForm', function (e) {
+    e.preventDefault();
+    const username = $('#username').val().trim();
+    const password = $('#password').val().trim();
 
-      $.ajax({
-        url: 'PHP/Principal_php.php',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ username, password }),
-        success: function (response) {
-          if (response.success) {
-            window.location.href = 'PAGINA/';
-          } else {
-            alert(response.message || 'Error al iniciar sesión');
-          }
-        },
-        error: function (xhr) {
-          alert('Error en la conexión:\n' + xhr.responseText);
+    $.ajax({
+      url: 'PHP/Principal_php.php',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ username, password }),
+      success: function (response) {
+        if (response.success) {
+          window.location.href = 'PAGINA/';
+        } else {
+          alert(response.message || 'Error al iniciar sesión');
         }
-      });
-    });
-
-    // LOGOUT
-    $('#logoutBtn').on('click', function () {
-      $.ajax({
-        url: '../../PHP/Principal_php.php',
-        method: 'POST',
-        data: { action: 'logout' },
-        success: function (response) {
-          if (response.success) {
-            window.location.href = '../../';
-          } else {
-            alert('No se pudo cerrar sesión');
-          }
-        },
-        error: function (xhr) {
-          alert('Error cerrando sesión:\n' + xhr.responseText);
-        }
-      });
-    });
-
-    // MAPA
-    document.addEventListener('click', function (event) {
-      if (event.target && event.target.id === 'mapa-estatico') {
-        const container = document.getElementById('mapa-contenedor');
-        container.innerHTML = `
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.213739473676!2d-102.3512343845859!3d20.71332998616585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842f7fc2e0c27413%3A0x1234567890abcdef!2sC.%20Felipe%20%C3%81ngeles%2024%2C%20Arandas%2C%20Jal.!5e0!3m2!1ses!2smx!4v1690000000000!5m2!1ses!2smx"
-            width="100%"
-            height="400"
-            allowfullscreen=""
-            loading="lazy"
-            class="mapa-iframe"
-            title="Mapa de ubicación de Secundaria Técnica 101"
-          ></iframe>`;
+      },
+      error: function (xhr) {
+        alert('Error en la conexión:\n' + xhr.responseText);
       }
     });
+  });
+
+  // ==================================================
+  // Sección: Logout
+  // ==================================================
+  $('#logoutBtn').on('click', function () {
+    $.ajax({
+      url: '../../PHP/Principal_php.php',
+      method: 'POST',
+      data: { action: 'logout' },
+      success: function (response) {
+        if (response.success) {
+          window.location.href = '../../';
+        } else {
+          alert('No se pudo cerrar sesión');
+        }
+      },
+      error: function (xhr) {
+        alert('Error cerrando sesión:\n' + xhr.responseText);
+      }
+    });
+  });
+
+  // ==================================================
+  // Sección: Mapa estático
+  // ==================================================
+  document.addEventListener('click', function (event) {
+    if (event.target && event.target.id === 'mapa-estatico') {
+      const container = document.getElementById('mapa-contenedor');
+      container.innerHTML = `
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.213739473676!2d-102.3512343845859!3d20.71332998616585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842f7fc2e0c27413%3A0x1234567890abcdef!2sC.%20Felipe%20%C3%81ngeles%2024%2C%20Arandas%2C%20Jal.!5e0!3m2!1ses!2smx!4v1690000000000!5m2!1ses!2smx"
+          width="100%"
+          height="400"
+          allowfullscreen=""
+          loading="lazy"
+          class="mapa-iframe"
+          title="Mapa de ubicación de Secundaria Técnica 101"
+        ></iframe>`;
+    }
+  });
 });

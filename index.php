@@ -24,7 +24,7 @@
  *   - Font Awesome para iconos.
  *   - jQuery 3.6 para funcionalidad dinámica.
  *
- *  Autor: [Tu Nombre]
+ *  Autor: [Guillermo Eliseo Guzman Lopez]
  *  Fecha: 2025
  * ==========================================================
  **/

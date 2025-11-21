@@ -3,7 +3,7 @@
  * ==========================================================
  *  📦 GESTOR DE SESIONES - SECUNDARIA TÉCNICA 101
  * ==========================================================
- *  Archivo: login_handler.php
+ *  Archivo: Principal_php.php
  *  Descripción:
  *      Controla las operaciones de autenticación seguras
  *      (inicio y cierre de sesión) para el portal de la

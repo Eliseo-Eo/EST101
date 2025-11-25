@@ -72,7 +72,7 @@ $(document).ready(function () {
     const container = $('#gallery-container');
     if (!container.length) return;
 
-    const totalImagenes = 70;
+    const totalImagenes = 85;
     const loteTam = 4;
     let cargadas = totalImagenes; // Empieza desde el total de imágenes
 

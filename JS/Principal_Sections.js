@@ -116,7 +116,7 @@
     </div>
 
     <div class="contenedor-mvv">
-      <!-- Evento 1: Desfile Septiembre -->
+      <!-- Evento 1: Desfile 16 de Septiembre -->
       <div class="card">
         <div class="icono">📚</div>
         <h3>Desfile Septiembre</h3>
@@ -179,6 +179,19 @@
           <img src="ARCHIVOS/EVENTOS/5.jpg" alt="Imagen del evento Día de Muertos" loading="lazy">
         </div>
         <p class="fecha-evento"><strong>Fecha:</strong> 1-2 de Noviembre 2025</p> <!-- Las fechas tradicionales son el 1 y 2 de noviembre -->
+      </div>
+
+       <!-- Evento 6: Desfile 20 de Noviembre -->
+       <div class="card">
+        <div class="icono">🎉</div> <!-- Ícono de fiesta que representa el desfile -->
+        <h3>Desfile Noviembre</h3>
+        <p>
+          El Desfile del 20 de Noviembre es una de las celebraciones más importantes de México, conmemorando la Revolución Mexicana. Es un evento lleno de música, danza, carros alegóricos y grupos de baile.
+        </p>
+        <div class="imagen-evento">
+          <img src="ARCHIVOS/EVENTOS/6.jpg" alt="Imagen del desfile del 20 de Noviembre" loading="lazy">
+        </div>
+        <p class="fecha-evento"><strong>Fecha:</strong> 20 de Noviembre 2025</p> <!-- La fecha del desfile es el 20 de noviembre -->
       </div>
 
     </div>
@@ -392,6 +405,38 @@
       </div>
     `).join('')}
 `,
+
+// =========================
+// Sección: Trabajo Social
+// =========================
+// Muestra los eventos realizados por Trabajo Social.
+ t_social: `
+<section class="eventos">
+  <h2 class="titulo-principal">🤝 Eventos de Trabajo Social</h2>
+  <h3 class="subtitulo">Conoce nuestras actividades de impacto social y comunitario.</h3>
+
+  <div class="texto-intro">
+    <p> 
+      Fomentamos la participación de nuestros estudiantes y padres de familia en actividades que promueven el compromiso social. 
+    </p>
+  </div>
+
+  <div class="contenedor-mvv">
+  
+    <!-- Evento 1: Escuela para Padres -->
+      <div class="card">
+        <div class="icono">👨‍👩‍👧‍👦</div>
+        <h3>Escuela para Padres</h3>
+        <p> Ofrecemos talleres y actividades para que los padres de familia puedan fortalecer su rol en la educación y el bienestar de sus hijos. </p>
+        <div class="imagen-evento">
+          <img src="ARCHIVOS/EVENTOS/7.jpg" alt="Imagen del evento Escuela para Padres" loading="lazy">
+        </div>
+        <p class="fecha-evento"><strong>Fecha:</strong> 21 de Noviembre 2025</p>
+    </div>
+
+  </div>
+</section>
+  `,
 
 // ==================================================
 // Sección: Asistencia

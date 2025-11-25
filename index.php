@@ -86,7 +86,7 @@ if (!empty($_SESSION['user_id']) && is_numeric($_SESSION['user_id'])) {
           <li data-section="galeria" tabindex="0"><i class="fas fa-images"></i> Galería</li>
           <li data-section="horarios" tabindex="0"><i class="fas fa-clock"></i> Horarios</li>
           <li data-section="tareas" tabindex="0"><i class="fas fa-list-check"></i> Tareas</li>
-          <li data-section="trabajo_social" tabindex="0"><i class="fas fa-hand-holding-heart"></i> Trabajo Social</li>
+          <li data-section="t_social" tabindex="0"><i class="fas fa-hand-holding-heart"></i> Trabajo Social</li>
           <li data-section="asistencia" tabindex="0"><i class="fas fa-user-check"></i> Asistencia</li>
           <li data-section="login" tabindex="0"><i class="fas fa-right-to-bracket"></i> Iniciar Sesión</li>
           <li data-section="contacto" tabindex="0"><i class="fas fa-envelope-open-text"></i> Contacto</li>

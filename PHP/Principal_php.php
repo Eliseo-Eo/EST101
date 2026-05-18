@@ -1,56 +1,33 @@
 <?php
 /**
  * ==========================================================
- *  📦 GESTOR DE SESIONES - SECUNDARIA TÉCNICA 101
- * ==========================================================
- *  Archivo: Principal_php.php
- *  Descripción:
- *      Controla las operaciones de autenticación seguras
- *      (inicio y cierre de sesión) para el portal de la
- *      Secundaria Técnica 101.
- *
- *  Características:
- *   - Gestión segura de sesiones PHP.
- *   - Soporte para solicitudes JSON (AJAX) y POST clásicas.
- *   - Cabeceras anti-caché para mayor seguridad.
- *   - Respuestas uniformes en formato JSON.
- *
- *  Autor: [Guillermo Eliseo Guzman Lopez]
- *  Fecha: 2025
+ *  📦 GESTOR DE SESIONES ADAPTADO A BD - TÉCNICA 101
  * ==========================================================
  */
 
 session_start();
+require_once 'Config.php'; // 👈 Importamos la conexión
+
 header('Content-Type: application/json');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 
 try {
-
-    // ==========================================================
-    // 🧭 Validación del método HTTP
-    // ==========================================================
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Método no permitido');
     }
 
-    // ==========================================================
-    // 🚪 Cierre de sesión (Logout clásico)
-    // ==========================================================
+    // CIERRE DE SESIÓN (Logout)
+    // Nota: Para AJAX con JSON, el logout suele enviarse distinto, 
+    // pero mantenemos tu lógica por compatibilidad.
     if (!empty($_POST['action']) && $_POST['action'] === 'logout') {
         session_unset();
         session_destroy();
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Sesión cerrada correctamente.'
-        ]);
+        echo json_encode(['success' => true, 'message' => 'Sesión cerrada.']);
         exit;
     }
 
-    // ==========================================================
-    // 🔐 Inicio de sesión (Login mediante JSON)
-    // ==========================================================
+    // INICIO DE SESIÓN
     $input = json_decode(file_get_contents('php://input'), true);
 
     if (!isset($input['username'], $input['password'])) {
@@ -61,32 +38,37 @@ try {
     $password = $input['password'];
 
     // ==========================================================
-    // 🧩 Validación de credenciales
-    // (En producción deben obtenerse desde una base de datos)
+    // 🧩 Lógica con Base de Datos
     // ==========================================================
-    $hash = password_hash('Tecnica101', PASSWORD_DEFAULT);
+    
+    // Buscamos al usuario por su alias (eliseo_eo) o correo
+    $stmt = $pdo->prepare("SELECT Id, Nombre_Completo, Usuario, Password, Rol FROM Maestros WHERE Usuario = ? LIMIT 1");
+    $stmt->execute([$username]);
+    $user = $stmt->fetch();
 
-    if ($username === 'Maestro_Tecnica' && password_verify($password, $hash)) {
-        $_SESSION['user_id'] = 1;
+    if ($user && password_verify($password, $user['Password'])) {
+        // ✅ Credenciales correctas: Creamos la sesión con datos de la BD
+        $_SESSION['User_Id'] = $user['Id'];
+        $_SESSION['Nombre']  = $user['Nombre_Completo'];
+        $_SESSION['Usuario'] = $user['Usuario'];
+        $_SESSION['Rol']     = $user['Rol'];
 
-        echo json_encode(['success' => true]);
+        echo json_encode([
+            'success' => true,
+            'rol' => $user['Rol'] // Útil para redirecciones en JS
+        ]);
     } else {
         echo json_encode([
             'success' => false,
-            'message' => 'Credenciales incorrectas'
+            'message' => 'Usuario o contraseña incorrectos'
         ]);
     }
 
 } catch (Exception $e) {
-
-    // ==========================================================
-    // ⚠️ Manejo de errores y excepciones
-    // ==========================================================
     http_response_code(400);
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
     ]);
 }
-
 exit;

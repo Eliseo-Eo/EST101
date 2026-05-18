@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['User_Id'])) {
     header('Location: ../');
     exit;
 }
@@ -403,6 +403,107 @@ select {
 
 
 
+
+
+
+
+
+
+
+
+
+
+.user-info {
+  text-align: center;
+  padding: 15px 10px;
+  color: white;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.1); /* Un fondo sutil para resaltar */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.user-info i {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.user-info span {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase; /* Opcional: hace que el nombre se vea más formal */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contenedor-tabla {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.tabla-materias {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tabla-materias th {
+  background-color: var(--color-principal);
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.tabla-materias td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.btn-accion {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 5px;
+  transition: 0.3s;
+  color: white;
+}
+
+.btn-descargar { background-color: #28a745; } /* Verde para Excel/PDF */
+.btn-capturar { background-color: var(--color-principal); } /* Guinda para calificar */
+
+.btn-accion:hover { opacity: 0.8; }
+
+
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
@@ -414,14 +515,22 @@ select {
   </header>
 
   <div class="container">
-    <!-- Menú lateral -->
+  <!-- Menú lateral -->
     <nav class="sidebar">
       <div class="title">EST 101</div>
       <div class="logo">
         <img src="../IMG/Logo.png" alt="Logo" />
       </div>
+      
+      <!-- AQUÍ AÑADIMOS EL NOMBRE DEL USUARIO -->
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i> 
+        <span><?php echo $_SESSION['Nombre']; ?></span>
+      </div>
+
       <ul class="menu">
         <li id="btn-inicio" class="active"><i class="fas fa-home"></i> Inicio</li>
+        <li id="btn-calificaciones"><i class="fas fa-chart-line"></i> Calificaciones</li>
         <li id="btn-planeaciones"><i class="fas fa-calendar-alt"></i> Planeaciones</li>
         <li id="btn-servicio"><i class="fas fa-hands-helping"></i> Servicio Social</li>
         <li id="btn-desercion"><i class="fas fa-user-slash"></i> Deserción Escolar</li>
@@ -458,6 +567,27 @@ select {
       inicio: `
         <h1>Inicio</h1>
         <p>Bienvenido a la sección de inicio. Aquí puedes ver el resumen general.</p>
+      `,
+      calificaciones: `
+        <h1>Panel de Control Académico</h1>
+        <p>Carga horaria asignada para el ciclo actual:</p>
+        
+        <div class="contenedor-tabla">
+          <table class="tabla-materias">
+            <thead>
+              <tr>
+                <th>Materia</th>
+                <th>Grado</th>
+                <th>Grupo</th>
+                <th>Ciclo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-materias">
+              <!-- Los datos se cargarán aquí desde la base de datos -->
+            </tbody>
+          </table>
+        </div>
       `,
       planeaciones: `
 <div class="contenedor-planeaciones">
@@ -550,6 +680,40 @@ select {
         <p>Personaliza tu experiencia en esta sección.</p>
       `
     };
+
+
+
+
+
+    function cargarTablaMaterias() {
+  fetch('../PHP/Obtener_Materias.php')
+    .then(response => response.json())
+    .then(data => {
+      const tabla = document.getElementById('cuerpo-tabla-materias');
+      tabla.innerHTML = ''; 
+      
+      data.forEach(item => {
+        tabla.innerHTML += `
+          <tr>
+            <td>${item.Nombre_Materia}</td>
+            <td>${item.Grado}°</td>
+            <td>${item.Grupo}</td>
+            <td>${item.Ciclo}</td>
+            <td>
+              <button class="btn-accion btn-descargar" onclick="descargarLista(${item.Asignacion_Id})">
+                <i class="fas fa-file-excel"></i> Lista
+              </button>
+              <button class="btn-accion btn-capturar" onclick="irACalificar(${item.Asignacion_Id})">
+                <i class="fas fa-edit"></i> Calificar
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    });
+}
+
+
 
     // Función para cambiar el contenido y el estado activo
     function cargarSeccion(seccionId) {
@@ -702,7 +866,7 @@ function cargarArchivos() {
 
 // Llamar a cargarArchivos cuando se carga la página
 window.onload = function() {
-  cargarSeccion('planeaciones'); // Para que cargue la sección 'inicio' al cargar
+  cargarSeccion('calificaciones'); // Para que cargue la sección 'inicio' al cargar
   cargarArchivos(); // Para que cargue los archivos
 };
  

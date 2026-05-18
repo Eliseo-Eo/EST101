@@ -271,9 +271,11 @@ $(document).ready(function () {
       data: JSON.stringify({ username, password }),
       success: function (response) {
         if (response.success) {
-          window.location.href = 'PAGINA/';
-        } else {
-          alert(response.message || 'Error al iniciar sesión');
+            if(response.rol === 'Administrador') {
+                window.location.href = 'PAGINA/';
+            } else {
+                window.location.href = 'PAGINA/123';
+            }
         }
       },
       error: function (xhr) {
